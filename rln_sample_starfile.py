@@ -55,7 +55,7 @@ def make_pretty_numbers(dataarray):
 #---------------------------------------------------------------------------------------------#
 
 #-----------------------------------------------------------------------------------#
-errormsg = "USAGE: rln_sample_for_autopick.py --i <star file>"
+errormsg = "USAGE: rln_sample_starfile.py --i <star file>\nOptional arguments:\n--bin <n>\t\t specifiy the size of the defocus bins, default is 0.5 micron"
 class Arg(object):
     _registry = []
     def __init__(self, flag, value, req):
@@ -111,6 +111,8 @@ def get_rand(range1,range2):
 #----------#  
 
 file = make_arg('--i',True,True)
+binsize = make_arg('--bin',True,False)
+
 if os.path.isfile(file) != True:
     sys.exit('ERROR: File {0} not found'.format(file))
 
@@ -123,7 +125,10 @@ for i in data:
 
 mind =  min(defoci)/10000
 maxd =  max(defoci)/10000
-groupbin = 0.5
+if binsize != False:
+    groupbin = float(binsize)
+else:
+    groupbin = 0.5
 numgroups = int(((maxd - mind)/groupbin))+1
 groupmaxes = [mind]
 for i in range (1,numgroups):

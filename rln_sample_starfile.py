@@ -143,7 +143,7 @@ for i in data:
 
 keys = groups.keys()
 keys.sort()
-print('   defocus\tmicrographs # = 10')
+print('   Defocus\tMicrographs # = 10')
 for i in keys:
     count = int(len(groups[i])/10)
     if count == 0:

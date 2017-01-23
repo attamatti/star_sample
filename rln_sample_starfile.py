@@ -145,7 +145,7 @@ for i in data:
         groups[returngroupnumber(i[labels['_rlnDefocusU ']])] = [i]
     else:
         groups[returngroupnumber(i[labels['_rlnDefocusU ']])].append(i)
-keys = range(0,len(groups)+1)
+keys = range(0,len(groups))
 print('   Defocus\tMicrographs # = 10')
 zeros = []
 for i in keys:

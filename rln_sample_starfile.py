@@ -98,7 +98,7 @@ def make_arg(flag, value, req):
 def returngroupnumber(defo):
     for i in reversed(groupmaxes):
         if float(defo)/10000 >= i:
-            return("{0}".format(groupmaxes.index(i)))
+            return(int(groupmaxes.index(i)))
 #------------------------------------------------#
 
 #----- function get random number
@@ -145,20 +145,25 @@ for i in data:
         groups[returngroupnumber(i[labels['_rlnDefocusU ']])] = [i]
     else:
         groups[returngroupnumber(i[labels['_rlnDefocusU ']])].append(i)
-
-keys = groups.keys()
-keys.sort()
+keys = range(0,len(groups)+1)
 print('   Defocus\tMicrographs # = 10')
+zeros = []
 for i in keys:
-    count = int(len(groups[i])/10)
+    try:
+        count = int(len(groups[i])/10)
+    except KeyError:
+        count = 'X'
     if count == 0:
         count  = 1
+    if count == 'X':
+        count = 0
+        zeros.append(str(i))
     print('{0}) {1}-{2}\t{3}'.format(i,groupids[int(i)][0],groupids[int(i)][1],count*'#'))
 
 nchosen = raw_input('which groups to use (comma separated): ')
 chocheck = nchosen.split(',')
 for i in chocheck:
-    if int(i) not in range(0,len(keys)) and i != ',':
+    if int(i) not in range(0,len(keys)+2) and i != ',':
         sys.exit('ERROR: Invalid entry : Out of range')
 
 nmicrographs = int(raw_input('how many from each group: '))
@@ -166,7 +171,9 @@ nmicrographs = int(raw_input('how many from each group: '))
 finaldata = []
 for i in nchosen.split(','):
     picked = []
-    if nmicrographs > len(groups[str(i)]):
+    if i in zeros:
+        sys.exit('ERROR: No micrographs in group {0}'.format(i))
+    if nmicrographs > len(groups[i]):
         sys.exit('ERROR: not enough micrographs in group {0}'.format(i))
     for j in range(0,nmicrographs):
         n = get_rand(0,len(groups[str(i)]))

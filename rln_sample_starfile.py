@@ -173,11 +173,11 @@ for i in nchosen.split(','):
     picked = []
     if i in zeros:
         sys.exit('ERROR: No micrographs in group {0}'.format(i))
-    if nmicrographs > len(groups[i]):
+    if nmicrographs > len(groups[int(i)]):
         sys.exit('ERROR: not enough micrographs in group {0}'.format(i))
     for j in range(0,nmicrographs):
-        n = get_rand(0,len(groups[str(i)]))
-        finaldata.append(groups[i][n])
+        n = get_rand(0,len(groups[int(i)]))
+        finaldata.append(groups[int(i)][n])
 
 output = open('random_selection.star','w')
 

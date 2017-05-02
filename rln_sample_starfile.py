@@ -176,6 +176,8 @@ for i in nchosen.split(','):
     if nmicrographs > len(groups[int(i)]):
         sys.exit('ERROR: not enough micrographs in group {0}'.format(i))
     for j in range(0,nmicrographs):
+        if len(groups[int(i)]) == 0:
+            break
         n = get_rand(0,len(groups[int(i)]))
         finaldata.append(groups[int(i)][n])
         groups[int(i)].remove(groups[int(i)][n])
